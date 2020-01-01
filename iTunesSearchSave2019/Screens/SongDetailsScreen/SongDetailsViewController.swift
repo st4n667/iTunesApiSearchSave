@@ -20,8 +20,8 @@ class SongDetailsViewController: UIViewController {
         songDetailsView = SongDetailsView(viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
         setupNavigationItems()
-        viewModel.isSaveButtonEnabled.bind { [weak self] isEnabled in
-            self?.saveBarButtonItem.isEnabled = isEnabled
+        viewModel.isSaveButtonEnabled.bind { [unowned self] isEnabled in
+            self.saveBarButtonItem.isEnabled = isEnabled
         }
     }
     

@@ -19,7 +19,9 @@ class SavedController: UIViewController {
     private let filterControllerFactory: FilterScreenFactory
     private let coreDataService: CoreDataService
     
-    init(viewModel: SavedControllerViewModel, coreDataService: CoreDataService, filterControllerFactory: FilterScreenFactory) {
+    init(viewModel: SavedControllerViewModel,
+         coreDataService: CoreDataService,
+         filterControllerFactory: FilterScreenFactory) {
         self.filterControllerFactory = filterControllerFactory
         self.viewModel = viewModel
         self.coreDataService = coreDataService
@@ -62,7 +64,7 @@ class SavedController: UIViewController {
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: coreDataService.context,
-            sectionNameKeyPath: keyPath,// #keyPath(Song.artistName),
+            sectionNameKeyPath: keyPath,
             cacheName: nil)
         fetchedResultsController.delegate = self
         return fetchedResultsController
@@ -73,9 +75,10 @@ class SavedController: UIViewController {
     }
     
     private func configureDatasource() -> SavedSongsDiffableDataSource {
-        let datasource = SavedSongsDiffableDataSource(collectionView: self.cv, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedSongCell.reuseIdentifier, for: indexPath) as? SavedSongCell else {
-                fatalError("cannot dequeue cell")
+        let datasource = SavedSongsDiffableDataSource(collectionView: self.cv, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier -> UICollectionViewCell? in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedSongCell.reuseIdentifier,
+                                                                for: indexPath) as? SavedSongCell else {
+                fatalError("Identifier or class not registered with this tableview")
             }
             
             let song = self.fetchedResultsController.object(at: indexPath)
@@ -108,8 +111,11 @@ class SavedController: UIViewController {
     }
     
     private func registerCells() {
-        cv.register(SavedSongCell.self, forCellWithReuseIdentifier: SavedSongCell.reuseIdentifier)
-        cv.register(SavedSongsCollectionSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SavedSongsCollectionSectionHeaderView.reuseIdentifier)
+        cv.register(SavedSongCell.self,
+                    forCellWithReuseIdentifier: SavedSongCell.reuseIdentifier)
+        cv.register(SavedSongsCollectionSectionHeaderView.self,
+                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: SavedSongsCollectionSectionHeaderView.reuseIdentifier)
     }
 
     lazy var cv: UICollectionView = {
@@ -126,12 +132,14 @@ class SavedController: UIViewController {
 
 // MARK: - UICollectionViewDelegate
 extension SavedController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         let item = fetchedResultsController.object(at: indexPath)
         viewModel.delete(item)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let sectionsCount = fetchedResultsController.sections?.count ?? 0
         let height: CGFloat = sectionsCount <= 1 ? 0 : 40
         return CGSize.init(width: collectionView.frame.width, height: height)
@@ -141,28 +149,36 @@ extension SavedController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SavedController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.bounds.width - 24) / 2 - 1
         return CGSize.init(width: width, height: width * 1.4)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
     }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension SavedController: NSFetchedResultsControllerDelegate {
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-        
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
         var diff = NSDiffableDataSourceSnapshot<String, Song.Diffable>()
         snapshot.sectionIdentifiers.forEach { section in
             diff.appendSections([section as! String])
@@ -217,7 +233,8 @@ extension SavedController {
 }
 
 extension SavedController: FiltersViewControllerDelegate {
-    func filtersViewController(_ controller: FiltersViewContoller, didApplyFilter filter: Filter?) {
+    func filtersViewController(_ controller: FiltersViewContoller,
+                               didApplyFilter filter: Filter?) {
         guard let filter = filter else {
             fetchRequest.predicate = nil
             fetchRequest.sortDescriptors = []

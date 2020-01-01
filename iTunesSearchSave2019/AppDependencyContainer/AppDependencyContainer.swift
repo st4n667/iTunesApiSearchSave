@@ -35,7 +35,8 @@ protocol ItemsTabBarFactory {
 
 extension AppDependencyContainer: ItemsTabBarFactory {
     func makeSearchViewController() -> SearchViewController {
-        SearchViewController(viewModel: makeSearchViewControllerViewModel(), songDetailsFactory: self)
+        SearchViewController(viewModel: makeSearchViewControllerViewModel(),
+                             songDetailsFactory: self)
     }
 
     func makeSearchViewControllerViewModel() -> SearchViewControllerViewModel {
@@ -47,7 +48,9 @@ extension AppDependencyContainer: ItemsTabBarFactory {
     }
 
     func makeSavedController() -> SavedController {
-        SavedController(viewModel: makeSavedViewControllerViewModel(), coreDataService: coreDataService, filterControllerFactory: self)
+        SavedController(viewModel: makeSavedViewControllerViewModel(),
+                        coreDataService: coreDataService,
+                        filterControllerFactory: self)
     }
 }
 
@@ -57,7 +60,8 @@ protocol DetailScreenFactory {
 
 extension AppDependencyContainer: DetailScreenFactory {
     func makeSongDetailsViewModel(song: JsonSong) -> SongDetailsViewControllerViewModel {
-        return SongDetailsViewControllerViewModel(song: song, coreDataService: coreDataService)
+        return SongDetailsViewControllerViewModel(song: song,
+                                                  coreDataService: coreDataService)
     }
 
     func makeSongDetailsViewController(song: JsonSong) -> SongDetailsViewController {

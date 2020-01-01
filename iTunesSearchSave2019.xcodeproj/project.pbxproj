@@ -140,7 +140,7 @@
 			children = (
 				F633357C23AFD6B700E296E0 /* AppDependencyContainer */,
 				F6D908CE23A93D420044D883 /* AppSceneDelegate */,
-				F6D908CD23A93D360044D883 /* Controllers */,
+				F6D908CD23A93D360044D883 /* Screens */,
 				F6019B5323B916B30043FB49 /* Enums */,
 				F687271123AD0828008D8065 /* Extensions */,
 				F6D908CF23A93E810044D883 /* Model */,
@@ -165,14 +165,14 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		F633357923AFD53100E296E0 /* SearchController */ = {
+		F633357923AFD53100E296E0 /* SearchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F66BBB6A23AC067F00E6CEE1 /* SongSearchResultCell.swift */,
-				F620525123A8248D0097CD8F /* SearchViewController.swift */,
 				F6D0DE5423B1FDAE007A3BA3 /* SearchViewControllerViewModel.swift */,
+				F620525123A8248D0097CD8F /* SearchViewController.swift */,
+				F640874D23BD00C8008BF65A /* Views */,
 			);
-			path = SearchController;
+			path = SearchScreen;
 			sourceTree = "<group>";
 		};
 		F633357C23AFD6B700E296E0 /* AppDependencyContainer */ = {
@@ -199,14 +199,14 @@
 			path = Observable;
 			sourceTree = "<group>";
 		};
-		F633357F23AFD74B00E296E0 /* SongDetailsViewController */ = {
+		F633357F23AFD74B00E296E0 /* SongDetailsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F633358023AFD76B00E296E0 /* SongDetailsViewController.swift */,
 				F61F4E7723B74D0500B78615 /* SongDetailsViewControllerViewModel.swift */,
-				F61F4E7923B74D3000B78615 /* SongDetailsView.swift */,
+				F633358023AFD76B00E296E0 /* SongDetailsViewController.swift */,
+				F640874E23BD00D1008BF65A /* Views */,
 			);
-			path = SongDetailsViewController;
+			path = SongDetailsScreen;
 			sourceTree = "<group>";
 		};
 		F638B82E23B695B40083DB15 /* UI Components */ = {
@@ -224,6 +224,47 @@
 				F638B83823B6B1F10083DB15 /* CoreDataService.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		F640874D23BD00C8008BF65A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F66BBB6A23AC067F00E6CEE1 /* SongSearchResultCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F640874E23BD00D1008BF65A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F61F4E7923B74D3000B78615 /* SongDetailsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F640874F23BD00E2008BF65A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F61F4E7B23B7921D00B78615 /* SavedSongCell.swift */,
+				F6019B5123B8B8ED0043FB49 /* SavedSongsCollectionSectionHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F640875023BD00E9008BF65A /* Datasource */ = {
+			isa = PBXGroup;
+			children = (
+				F6019B4F23B8B8C40043FB49 /* SavedSongsDiffableDataSource.swift */,
+			);
+			path = Datasource;
+			sourceTree = "<group>";
+		};
+		F640875123BD0153008BF65A /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				97F75DAF23BB82D600D54E2C /* FiltersView.swift */,
+			);
+			path = VIews;
 			sourceTree = "<group>";
 		};
 		F6451D8A23B6189F003A6BC5 /* ImageLoader */ = {
@@ -271,36 +312,34 @@
 			path = Disk;
 			sourceTree = "<group>";
 		};
-		F6965DED23B557AB00AFF319 /* SavedController */ = {
+		F6965DED23B557AB00AFF319 /* SavedSongsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F61F4E7B23B7921D00B78615 /* SavedSongCell.swift */,
 				97BA51B523BB482800C24E11 /* SavedControllerViewModel.swift */,
 				F6D908CB23A938A40044D883 /* SavedController.swift */,
-				F6019B5123B8B8ED0043FB49 /* SavedSongsCollectionSectionHeaderView.swift */,
-				F6019B4F23B8B8C40043FB49 /* SavedSongsDiffableDataSource.swift */,
+				F640875023BD00E9008BF65A /* Datasource */,
+				F640874F23BD00E2008BF65A /* Views */,
 			);
-			path = SavedController;
+			path = SavedSongsScreen;
 			sourceTree = "<group>";
 		};
-		F6965DEE23B557B400AFF319 /* MainTabBarController */ = {
+		F6965DEE23B557B400AFF319 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
-				9797D09123AA652900701A30 /* MainTabBarController.swift */,
 				97DD71FA23BB64D6005F5E7F /* MainTabBarViewModel.swift */,
+				9797D09123AA652900701A30 /* MainTabBarController.swift */,
 			);
-			path = MainTabBarController;
+			path = MainTabBar;
 			sourceTree = "<group>";
 		};
-		F6C8114523B88BF2008602F6 /* FiltersViewController */ = {
+		F6C8114523B88BF2008602F6 /* FiltersScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F6C8114323B88B7B008602F6 /* FiltersViewContoller.swift */,
-				97F75DB123BB82DC00D54E2C /* Filter.swift */,
-				97F75DAF23BB82D600D54E2C /* FiltersView.swift */,
 				F6D6B58F23BBA21E00D94DDE /* FiltersViewModel.swift */,
+				F6C8114323B88B7B008602F6 /* FiltersViewContoller.swift */,
+				F640875123BD0153008BF65A /* VIews */,
 			);
-			path = FiltersViewController;
+			path = FiltersScreen;
 			sourceTree = "<group>";
 		};
 		F6D908B923A9319F0044D883 /* CoreData */ = {
@@ -313,16 +352,16 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		F6D908CD23A93D360044D883 /* Controllers */ = {
+		F6D908CD23A93D360044D883 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				F633357923AFD53100E296E0 /* SearchController */,
-				F633357F23AFD74B00E296E0 /* SongDetailsViewController */,
-				F6965DED23B557AB00AFF319 /* SavedController */,
-				F6965DEE23B557B400AFF319 /* MainTabBarController */,
-				F6C8114523B88BF2008602F6 /* FiltersViewController */,
+				F633357923AFD53100E296E0 /* SearchScreen */,
+				F633357F23AFD74B00E296E0 /* SongDetailsScreen */,
+				F6965DED23B557AB00AFF319 /* SavedSongsScreen */,
+				F6965DEE23B557B400AFF319 /* MainTabBar */,
+				F6C8114523B88BF2008602F6 /* FiltersScreen */,
 			);
-			path = Controllers;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		F6D908CE23A93D420044D883 /* AppSceneDelegate */ = {
@@ -338,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				F6D908B923A9319F0044D883 /* CoreData */,
+				97F75DB123BB82DC00D54E2C /* Filter.swift */,
 				F6D908D023A93E8F0044D883 /* JsonSong.swift */,
 			);
 			path = Model;

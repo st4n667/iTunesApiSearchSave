@@ -25,13 +25,15 @@ class SavedSongsDiffableDataSource: UICollectionViewDiffableDataSource<String, S
         print(String(describing: type(of: self)), #function)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
         
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SavedSongsCollectionSectionHeaderView.reuseIdentifier, for: indexPath) as? SavedSongsCollectionSectionHeaderView else {
-            fatalError("cannnot dequeue headerView")
+            fatalError("Identifier or class not registered with this collection view")
         }
         header.label.text = headerConfigurator(indexPath)
         return header

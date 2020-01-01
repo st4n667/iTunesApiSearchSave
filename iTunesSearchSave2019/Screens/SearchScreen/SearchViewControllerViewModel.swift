@@ -49,11 +49,11 @@ class SearchViewControllerViewModel: NSObject, SearchViewControllerViewModelType
     func makeRequestWithQuery(_ query: String) {
         self.query = query
         let endpoint: RequestProvider = Endpoint.searchForSong(query, limit: fetchSessionLimit, offset: 0)
-        networking.request(endpoint) { (res) in
+        networking.request(endpoint) { [weak self] res in
             if case let .success(data) = res {
                 let results = try! JSONDecoder().decode(JsonResponse.self, from: data)
-                self.songs = results.results ?? []
-                self.onFeedUpdate?()
+                self?.songs = results.results ?? []
+                self?.onFeedUpdate?()
             }
         }
     }
@@ -61,13 +61,13 @@ class SearchViewControllerViewModel: NSObject, SearchViewControllerViewModelType
     func paginate() {
         guard let query = query else { return }
         let endpoint = Endpoint.searchForSong(query, limit: fetchSessionLimit, offset: songs.count + 1)
-        networking.request(endpoint) { (res) in
+        networking.request(endpoint) { [weak self] res in
             if case let .success(data) = res {
                 let results = try! JSONDecoder().decode(JsonResponse.self, from: data)
                 let downloadedSongs = results.results ?? []
-                self.songs += downloadedSongs
+                self?.songs += downloadedSongs
                 DispatchQueue.global().async {
-                    self.onFeedUpdate?()
+                    self?.onFeedUpdate?()
                 }
             }
         }

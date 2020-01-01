@@ -40,13 +40,6 @@ class FiltersViewContoller: UIViewController {
         print(String(describing: type(of: self)), #function)
     }
     
-    fileprivate func setupNavBarItems() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
-        let resetBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
-        let applyBarButtonItem = UIBarButtonItem(title: "Apply", style: .plain, target: self, action: #selector(handleApply))
-        navigationItem.rightBarButtonItems = [applyBarButtonItem, resetBarButtonItem]
-    }
-
     override func loadView() {
         view = filtersView
     }
@@ -58,6 +51,22 @@ class FiltersViewContoller: UIViewController {
         viewModel.delegate = self
     }
     
+    fileprivate func setupNavBarItems() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                           style: .done,
+                                                           target: self,
+                                                           action: #selector(handleCancel))
+        let resetBarButtonItem = UIBarButtonItem(title: "Reset",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(handleReset))
+        let applyBarButtonItem = UIBarButtonItem(title: "Apply",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(handleApply))
+        navigationItem.rightBarButtonItems = [applyBarButtonItem, resetBarButtonItem]
+    }
+
     @objc func handleApply() {
         delegate?.filtersViewController(self, didApplyFilter: currentFilter)
         self.dismiss(animated: true)

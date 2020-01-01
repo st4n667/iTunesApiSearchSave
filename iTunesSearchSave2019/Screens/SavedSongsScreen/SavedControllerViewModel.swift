@@ -18,7 +18,8 @@ class SavedControllerViewModel {
         self.coreDataService = coreDataService
     }
     
-    /* move this to service */
+    /* move this to service
+     handle errors */
     func delete(_ item: Song) {
         do {
             let endpoint = try DiskEndpoint.imageDocuments(filename: item.imageFilename!)

@@ -17,7 +17,8 @@ class SearchViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView(style: .large)
     
     // MARK: - Lifecycle
-    init(viewModel: SearchViewControllerViewModelType, songDetailsFactory: DetailScreenFactory) {
+    init(viewModel: SearchViewControllerViewModelType,
+         songDetailsFactory: DetailScreenFactory) {
         self.songDetailsFactory = songDetailsFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -46,7 +47,7 @@ class SearchViewController: UIViewController {
     
     private func subscribeToViewModel() {
         viewModel.onFeedUpdate = {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [unowned self] in
                 self.activityIndicator.stopAnimating()
             }
             self.updateSnapshot()
@@ -63,14 +64,12 @@ class SearchViewController: UIViewController {
     
     // MARK: Configure diffable datasource
     private func configureDatasource() -> UITableViewDiffableDataSource<Int, JsonSong.Diffable> {
-        let datasource = UITableViewDiffableDataSource<Int, JsonSong.Diffable>(tableView: self.tv) { [unowned self]
-            tableView, indexPath, itemIdentifier in
-            let song = self.viewModel.getItemAt(indexPath)
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SongSearchResultCell.reuseIdentifier, for: indexPath) as? SongSearchResultCell else {
+        let datasource = UITableViewDiffableDataSource<Int, JsonSong.Diffable>(tableView: self.tv) { [unowned self] tableView, indexPath, itemIdentifier in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SongSearchResultCell.reuseIdentifier,
+                                                           for: indexPath) as? SongSearchResultCell else {
                 fatalError("Identifier or class not registered with this table view")
             }
-            
+            let song = self.viewModel.getItemAt(indexPath)
             cell.titleLabel.text = song.trackName
             cell.artistLabel.text = song.artistName
             cell.albumLabel.text = song.collectionName
@@ -86,15 +85,18 @@ class SearchViewController: UIViewController {
         snapshot.appendSections([0])
         let songs = self.viewModel.songs.map(JsonSong.Diffable.init)
         snapshot.appendItems(songs, toSection: 0)
-        DispatchQueue.main.async {
-            self.datasource.apply(snapshot, animatingDifferences: false, completion: nil)
+        DispatchQueue.main.async { [unowned self] in
+            self.datasource.apply(snapshot,
+                                  animatingDifferences: false,
+                                  completion: nil)
         }
     }
     
     lazy var tv: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.register(SongSearchResultCell.self, forCellReuseIdentifier: SongSearchResultCell.reuseIdentifier)
+        tv.register(SongSearchResultCell.self,
+                    forCellReuseIdentifier: SongSearchResultCell.reuseIdentifier)
         tv.dataSource = self.datasource
         tv.delegate = self
         tv.rowHeight = 100
